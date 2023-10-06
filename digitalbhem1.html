@@ -1,0 +1,172 @@
+<html>
+<head>
+    <title>Hotel Booking Form</title>
+    <style>
+        /* Your CSS styles for the form go here */
+        body {
+            background-image: url('https://images.travelandleisureasia.com/wp-content/uploads/sites/2/2022/02/16144758/Udaipur.jpg');
+            font-family: Arial, sans-serif;
+            background-size: auto;
+            background-position: center;
+
+            color:rgb(21, 10, 32);       }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #af5454;
+            border-radius: 5px;
+            background-color: #22d4d4;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        /* Add more CSS styles for specific fields if needed */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Hotel Booking Form</h2>
+        <form action="/action_page.php" method="post">
+            <div class="customer-info">
+                <h3>Customer Info</h3>
+                <div class="form-group">
+                    <label for="customerName">Customer Name:</label>
+                    <input type="text" id="customerName" name="customerName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkinDate">Check-in Date:</label>
+                    <input type="date" id="checkinDate" name="checkinDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="totalDays">Total No of Days:</label>
+                    <input type="number" id="totalDays" name="totalDays" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="totalPersons">Total No of Persons:</label>
+                    <input type="number" id="totalPersons" name="totalPersons" required>
+                </div>
+            </div>
+
+            <div class="room-info">
+                <h3>Room Information</h3>
+                <div class="form-group">
+                    <label for="roomType">Room Type:</label>
+                    <select id="roomType" name="roomType">
+                        <option value="">Please Select</option>
+                        <option value="Delux">Delux Room</option>
+                        <option value="Suite">Suite Room</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="amenities">Amenities:</label>
+                    <select id="amenities" name="amenities">
+                        <option value="">Please Select</option>
+                        <option value="AC">AC</option>
+                        <option value="Locker">Locker</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="payment-info">
+                <h3>Payment Information</h3>
+                <div class="form-group">
+                    <label for="advanceAmount">Advance Amount:</label>
+                    <input type="number" id="advanceAmount" name="advanceAmount" required>
+                </div>
+                <h5>
+                    Aditional Charges
+                </h5>
+                <p>
+                    -Upto 2 People No Change in Cost  
+                </p>
+                <p>
+                    -Per Day Cost for Extra Person: 1000\-
+                </p>
+               <input type="submit" value="submit">
+            </div>
+        </form>
+    </div> 
+    <div class="total">
+        <p>
+            Total Cost:<span id="total_cost"></span>
+        </p>
+        <p>
+            Balance:<span id="balance"></span>
+        </p>
+    </div>
+        <script>
+            //calculate total cost 
+            function calculateTotalCost(){
+                var roomType=
+                document.querySelector('#roomType').value;
+                var roomRate=0;
+                if(roomType==='Delux'){
+                    roomRate=2500;
+                }
+                else if(roomType==='Suite'){
+                    roomRate=4000;
+                }
+
+                var amenities=
+                document.querySelector('#amenities').value;
+                var amenitiesCost=0;
+                if (amenities==='AC') {
+
+                    amenitiesCost=1000;
+                }
+                else if (amenities==='Locker') {
+                    amenitiesCost=300;
+                }
+                var totalDays=
+                document.querySelector('#totalDays').value;
+                var totalRoomCost=roomRate*totalDays;
+                var totalAmenitiesCost=amenitiesCost*totalDays;
+                var totalCost=totalRoomCost+totalAmenitiesCost;
+                //Display Balance Amoount 
+                document.querySelector('#total_cost').textContent=totalCost;
+
+                //calculate balance amount 
+                var advanceAmount=document.querySelector('#advanceAmount').value;
+                var balance=totalCost-advanceAmount;
+
+                //Diaplay balance Amount 
+                document.querySelector('#balance').textContent=balance;
+
+            }
+           document.querySelector('form').addEventListener('submit',function (e){
+            e.preventDefault(); //prevent the form from submitting 
+            calculateTotalCost();
+           }); 
+        </script>
+    </body>
+    </html>
